@@ -1,0 +1,53 @@
+version: '3.0'
+
+services:
+  smgbitback:
+    hostname: smgbitback
+    depends_on:
+      - database
+    build:
+      context: .
+    restart: always
+    ports:
+      - '80:80'
+    networks:
+      - db-net
+
+  database:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    hostname: 'database'
+    environment:
+      SA_PASSWORD: 'Veteranos.1'
+      ACCEPT_EULA: 'Y'
+    ports:
+      - '1433:1433'
+    expose:
+      - 1433
+    volumes:
+      - dbdata:/var/lib/mssql
+    restart: always
+    networks:
+      - db-net
+
+  react:
+    image: node:18
+    build:
+      context: .
+      dockerfile: Dockerfile.react
+    hostname: react
+    depends_on:
+      - smgbitback
+    ports:
+      - '3000:3000'
+    environment:
+      - ISDOCKER=true
+      - APP=smgbit-back
+      - REACT_APP_ISDOCKER=true
+    networks:
+      - db-net
+volumes:
+  dbdata:
+
+networks:
+  db-net:
+    driver: bridge

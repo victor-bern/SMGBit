@@ -1,0 +1,8 @@
+FROM node:18
+
+WORKDIR /app
+
+COPY /smgbit-front ./
+RUN yarn 
+COPY . .
+CMD ["yarn", "start"]
