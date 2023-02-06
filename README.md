@@ -4,7 +4,7 @@ Um projeto com backend em .Net 7.0, frontend com ReactJS e backend com SqlServer
 
 ## Instalação
 
-- Acesse a pasta smgbit-backend
+- Acesse a pasta smgbit-back
 - Acesse o arquivo appsettings.json e coloque sua string de conexão
 - use o comando ```dotnet restore``` e após ele ```dotnet build```
 - Rode o backend com ```dotnet run -p Locadora```
